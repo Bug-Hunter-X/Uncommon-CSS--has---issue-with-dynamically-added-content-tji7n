@@ -1,0 +1,13 @@
+The following CSS code snippet demonstrates an uncommon issue that can arise when using the `:has()` pseudo-class with dynamic content or content loaded asynchronously:
+
+```css
+.container:has(> .item:nth-child(2)) {
+  background-color: lightblue;
+}
+```
+
+This rule intends to apply a lightblue background to the `.container` element only if it contains at least a second `.item` child element. The problem is that if the second `.item` element is added to the DOM dynamically (e.g., via JavaScript), the `:has()` selector might not immediately recognize the change, leading to the style not being applied.
+
+Another related issue is when the content is loaded asynchronously (e.g., via AJAX).  The browser might render the CSS before the content is available, causing the `:has()` selector to not trigger.
+
+This can be particularly confusing as the selector seems correct, but the visual result does not reflect the expected behavior.  The CSS is technically valid but interacts unexpectedly with dynamic content.
