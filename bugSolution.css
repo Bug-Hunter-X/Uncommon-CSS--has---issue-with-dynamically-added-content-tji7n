@@ -1,0 +1,31 @@
+While there's no direct fix to make `:has()` instantly react to DOM mutations, a workaround involves using JavaScript to detect the change and manually add/remove the class that triggers the desired CSS style. 
+
+Here's an example using JavaScript to fix the problem, assuming the content is added using JavaScript:
+
+```javascript
+const container = document.querySelector('.container');
+
+function checkSecondItem() {
+  const secondItem = container.querySelector('.item:nth-child(2)');
+  if (secondItem) {
+    container.classList.add('has-second-item');
+  } else {
+    container.classList.remove('has-second-item');
+  }
+}
+
+// Add event listener for DOM changes (mutation observer is a more robust option)
+container.addEventListener('DOMSubtreeModified', checkSecondItem);
+
+//Check on initial load
+checkSecondItem();
+```
+
+And the adjusted CSS:
+```css
+.container.has-second-item {
+  background-color: lightblue;
+}
+```
+
+This approach ensures the CSS is updated whenever the second `.item` is added or removed.  A more robust solution would utilize a MutationObserver for DOM changes.
